@@ -1,8 +1,15 @@
 sudo -i
+echo "copying s3 data"
+mkdir helios_deploy_files
+cd helios_deploy_files
+aws s3 cp s3://codepipeline-us-east-1-168682193522/Helios_CD_Pipeline/BuildArtif/WxXuItx .
+unzip WxXuItx
+cp target/* /opt/tomcat/webapps
+echo "bringing up the cluster"
 helios-up
 echo "creating image using helios"
-helios-solo create cd_helios_2004:1 867515034458.dkr.ecr.us-east-1.amazonaws.com/helios-repo:latest -- sh -c "while :; do sleep 1; done"
+helios-solo create cd_helios_2104:1 867515034458.dkr.ecr.us-east-1.amazonaws.com/helios-repo:latest -- sh -c "while :; do sleep 1; done"
 echo"deploying the image"
-helios-solo deploy cd_helios_2004:1 solo
+helios-solo deploy cd_helios_2104:1 solo
 helios-solo status
 echo "doneeeee"
