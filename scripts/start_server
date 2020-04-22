@@ -3,7 +3,8 @@ echo "copying s3 data"
 mkdir helios_deploy_files
 cd helios_deploy_files
 echo "fetching latest build from s3 bucket"
-FILE=`aws s3api list-objects-v2 --bucket "codepipeline-us-east-1-168682193522" --query 'reverse(sort_by(Contents[?contains(Key, \`Helios_CD_Pipeline\`)], &LastModified))[:1].Key' --output=text`;aws s3 cp "s3://codepipeline-us-east-1-168682193522/$FILE" .; unzip *
+FILE=`aws s3api list-objects-v2 --bucket "codepipeline-us-east-1-168682193522" --query 'reverse(sort_by(Contents[?contains(Key, \`Helios_CD_Pipeline\`)], &LastModified))[:1].Key' --output=text`;aws s3 cp "s3://codepipeline-us-east-1-168682193522/$FILE" .
+unzip *
 echo "copying the contents to tomcat"
 cp target/* /opt/tomcat/webapps
 echo "bringing up the cluster"
