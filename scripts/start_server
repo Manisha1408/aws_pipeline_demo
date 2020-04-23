@@ -7,7 +7,7 @@ FILE=`aws s3api list-objects-v2 --bucket "codepipeline-us-east-1-168682193522" -
 sleep 10s
 unzip *
 echo "copying the contents to tomcat"
-cp target/* /opt/tomcat/webapps
+cp -R target/* /opt/tomcat/webapps
 systemctl restart tomcat
 echo "bringing up the cluster"
 helios-up
